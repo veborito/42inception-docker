@@ -1,0 +1,62 @@
+services:
+  nginx:
+    build: 
+      context: ./requirements/nginx/
+      args:
+        SSL_KEY: ${SSL_KEY}
+        SSL_CERT: ${SSL_CERT}
+        DOMAIN: ${DOMAIN}
+        COUNTRY: ${COUNTRY}
+        CITY: ${CITY}
+        ORGANISATION: ${ORGANISATION}
+    container_name: nginx
+    ports: 
+      - 443:443
+    env_file:
+     - .env
+    depends_on:
+      - wordpress
+    networks:
+     - inception
+    volumes:
+     - web:/var/www/wordpress
+    restart: always
+  mariadb:
+    build: ./requirements/mariadb/
+    container_name: mariadb
+    env_file:
+     - .env
+    networks:
+     - inception
+    volumes:
+      - data:/var/lib/mysql
+    restart: always
+  wordpress:
+    build: ./requirements/wordpress/
+    container_name : wordpress
+    env_file:
+     - .env
+    depends_on:
+     - mariadb
+    networks:
+     - inception
+    volumes:
+      - web:/var/www/wordpress
+    restart: always
+networks:
+  inception:
+    driver: bridge
+volumes:
+  web:
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/borito/inception/data/web/
+      o : bind
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/borito/inception/data/mariadb/
+      o : bind
+
