@@ -2,6 +2,8 @@
 
 service mariadb start
 
+sleep 1
+
 if [ -d "/var/lib/mysql/$MARIADB_DATABASE" ]
 then 
 

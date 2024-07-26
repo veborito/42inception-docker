@@ -2,7 +2,7 @@ FROM debian:bookworm
 
 RUN apt-get update && apt-get upgrade
 
-RUN apt-get install -y wget php php-fpm php-mysql
+RUN apt-get install -y wget php php-fpm php-mysql sendmail
 
 RUN cd var/www && wget https://wordpress.org/latest.tar.gz \
   && tar -xzvf latest.tar.gz && rm latest.tar.gz
