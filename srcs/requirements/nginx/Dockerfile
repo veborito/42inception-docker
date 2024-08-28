@@ -1,17 +1,15 @@
-FROM debian:bookworm
+FROM debian:11
 
 ARG SSL_KEY
 ARG SSL_CERT
-ARG DOMOAIN
+ARG DOMAIN
 ARG COUNTRY
 ARG CITY
 ARG ORGANISATION
 
-RUN apt-get update && apt-get upgrade
-
-RUN apt-get install -y vim nginx openssl
-
-RUN apt-get install -y gettext
+RUN apt-get update && apt-get upgrade && \
+  apt-get install -y vim nginx openssl && \
+  apt-get install -y gettext
 
 COPY ./conf/nginx.conf /etc/nginx/
 
@@ -19,7 +17,7 @@ COPY ./tools/set-up.sh .
 
 RUN chmod u+x set-up.sh
 
-RUN openssl req -x509 -nodes -sha256 -newkey rsa:4096 -keyout ${SSL_KEY} -out ${SSL_CERT} -subj "/C=${COUNTRY}/L=${CITY}/O=${ORGANISATION}/CN=${DOMOAIN}"
+RUN openssl req -x509 -nodes -sha256 -newkey rsa:4096 -keyout ${SSL_KEY} -out ${SSL_CERT} -subj "/C=${COUNTRY}/L=${CITY}/O=${ORGANISATION}/CN=${DOMAIN}"
 
 EXPOSE 443
 
