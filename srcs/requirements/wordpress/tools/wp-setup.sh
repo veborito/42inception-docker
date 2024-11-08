@@ -13,4 +13,4 @@ else
   ./wp-cli.phar user create --allow-root $WP_USER $WP_EMAIL --role=author --user_pass=$(< $WP_USER_PASS) --path='/var/www/wordpress'
 fi
 
-/usr/sbin/php-fpm7.4 -F
+/usr/sbin/php-fpm8.2 -F

@@ -1,7 +1,7 @@
-FROM debian:11
+FROM debian:12
 
 RUN apt-get update && apt-get upgrade \
-  && apt-get install -y wget php php-fpm php-mysql
+  && apt-get install -y wget php php-fpm php-mysql sendmail
 
 RUN wget -P /var/www/ https://wordpress.org/latest.tar.gz \
   && tar -xzvf /var/www/latest.tar.gz -C /var/www/ && rm /var/www/latest.tar.gz \
@@ -9,7 +9,7 @@ RUN wget -P /var/www/ https://wordpress.org/latest.tar.gz \
   && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
   && chmod +x wp-cli.phar
 
-COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d
+COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d
 
 COPY ./tools/wp-setup.sh .
 

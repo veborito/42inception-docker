@@ -1,6 +1,6 @@
-FROM debian:11
+FROM debian:12
 
-RUN apt-get update && apt-get upgrade \
+RUN apt-get update -y && apt-get upgrade -y \
   && apt-get install -y mariadb-server mariadb-client
 
 RUN mkdir /var/run/mysqld/ && chown -R mysql:mysql /var/run/mysqld && chmod 777 /var/run/mysqld
